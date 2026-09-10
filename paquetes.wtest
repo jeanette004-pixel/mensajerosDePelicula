@@ -1,0 +1,39 @@
+import paquetes.*
+describe "Tests de Pepita" {
+
+	test "neo no puede llevar el paquete a la matrix" {
+        paquete.destino(matrix)
+		paquete.persona(neo)
+		assert.notThat(paquete.estaPagado())
+		assert.notThat(paquete.puedeSerEntregado())
+	}
+    test "jeanGray puede llevar el paquete a la matrix" {
+        paquete.destino(matrix)
+		paquete.persona(jeanGray)
+        paquete.pagar()
+		assert.that(paquete.estaPagado())
+		assert.that(paquete.puedeSerEntregado())
+	}
+    test "sara no puede llevar el paquete a brooklyn" {
+        paquete.destino(puenteDeBrooklyn)
+		paquete.persona(saraConnor)
+        saraConnor.vehiculo(camion)
+        saraConnor.peso(70)
+        paquete.pagar()
+        camion.cantidadDeAcoplados(1)
+        assert.that(paquete.estaPagado())
+        assert.equals(70, saraConnor.peso())
+		assert.notThat(paquete.puedeSerEntregado())
+	}
+    test "sara puede llevar el paquete a brooklyn" {
+        paquete.destino(puenteDeBrooklyn)
+		paquete.persona(saraConnor)
+        saraConnor.puedeLlamar(true)
+        saraConnor.peso(70)
+        saraConnor.vehiculo(moto)
+        paquete.pagar()
+        assert.that(paquete.estaPagado())
+        assert.equals(70, saraConnor.peso())
+		assert.that(paquete.puedeSerEntregado())
+	}
+}

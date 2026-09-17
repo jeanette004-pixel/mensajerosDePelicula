@@ -15,6 +15,43 @@ object paquete{
 	}
 	
 }
+//nuevo
+object paquetito{
+	var property estaPagado=true //siempre esta pagado
+	var property peso=0
+	var property persona=neo
+	var property destino=matrix
+	method precioDelPaquete(lugar){
+		return lugar.tarifa()
+	}
+/*
+	method pagar(){
+		 estaPagado= true
+	}
+*/
+	method puedeSerEntregado(){
+		return self.estaPagado()// && destino.personaCumpleRestricciones(persona)
+	}
+}
+
+object paquetonViajero{
+	var property estaPagado=false
+	var property peso=0
+	var property persona=neo
+	var property destinos=[]//multiples destinos
+	method precioDelPaquete(lugar){//no uso lugar pero lo dejo
+	//	lugar.tarifa()
+		return 100 * destinos.size()
+	}
+	method pagar(){
+		 estaPagado= true //hacerlo con un if 
+	}
+
+	method puedeSerEntregado(){
+		return self.estaPagado() && destinos.all({d => d.personaCumpleRestricciones(persona)})
+	}
+	
+}
 
 object matrix{
 	method tarifa(){

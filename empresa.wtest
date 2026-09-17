@@ -1,0 +1,61 @@
+import paquetes.*
+import empresa.*
+
+describe "test de empresas"{
+    test "contratar a un mensajero"{
+        empresa.contratar(saraConnor)
+        assert.that(empresa.mensajeros().contains(saraConnor))
+    }
+
+    test "despedir a un mensajero"{
+        empresa.contratar(saraConnor)
+        empresa.despedir(saraConnor)
+        assert.notThat(empresa.mensajeros().contains(saraConnor))
+    }
+
+    test "despedir a todos los mensajeros"{
+        empresa.contratar(saraConnor)
+        empresa.contratar(jeanGray)
+        empresa.mensajeros().clear()
+        assert.that(empresa.mensajeros().isEmpty())
+    }
+
+    test "la mensajeria es grande"{
+        empresa.contratar(saraConnor)
+        empresa.contratar(jeanGray)
+        empresa.contratar(neo)
+        assert.that(empresa.mensajeriaEsGrande())
+    }
+    test "la mensajeria no es grande"{
+        empresa.contratar(saraConnor)
+        empresa.contratar(jeanGray)
+        assert.notThat(empresa.mensajeriaEsGrande())
+    }
+
+    test "paquete puede ser entegado por el primer mensajero"{
+        empresa.contratar(neo)
+        empresa.contratar(jeanGray)
+        const primerMensajero=empresa.mensajeros().first()
+        paquete.persona(primerMensajero)
+        paquete.destino(matrix)
+        paquete.pagar()
+        assert.that(paquete.puedeSerEntregado())
+    }
+
+    test "paquete no puede ser entegado por el primer mensajero"{
+        empresa.contratar(neo)
+        empresa.contratar(jeanGray)
+        const primerMensajero=empresa.mensajeros().first()
+        paquete.persona(primerMensajero)
+        paquete.destino(matrix)
+        //no paga
+        assert.notThat(paquete.puedeSerEntregado())
+    }
+
+    test "peso del ultimo pasajero"{
+        empresa.contratar(saraConnor)
+        empresa.contratar(jeanGray)
+        const ultimoMensajero=empresa.mensajeros().last()
+        assert.equals(65, jeanGray.peso())
+    }
+}

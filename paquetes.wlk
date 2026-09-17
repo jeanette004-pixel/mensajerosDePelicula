@@ -1,3 +1,6 @@
+import personajes.*
+import lugares.*
+import transporte.*
 object paquete{
 	var property estaPagado=false
 	var property peso=0
@@ -13,7 +16,12 @@ object paquete{
 	method puedeSerEntregado(){
 		return self.estaPagado() && destino.personaCumpleRestricciones(persona)
 	}
-	
+	/*
+	ooo ????
+	method puedeSerEntregado(destino_,persona_){
+		return self.estaPagado() && destino_.personaCumpleRestricciones(persona_)
+	}
+	*/
 }
 //nuevo
 object paquetito{
@@ -36,16 +44,26 @@ object paquetito{
 
 object paquetonViajero{
 	var property estaPagado=false
+	var property dineroPagadoHastaAhora=0
 	var property peso=0
 	var property persona=neo
 	var property destinos=[]//multiples destinos
-	method precioDelPaquete(lugar){//no uso lugar pero lo dejo
+	method precioDelPaquete(){//no uso lugar 
 	//	lugar.tarifa()
 		return 100 * destinos.size()
 	}
-	method pagar(){
-		 estaPagado= true //hacerlo con un if 
+	method pagar(cantidad){
+		self.verificarSiEstaPago()
+		dineroPagadoHastaAhora=dineroPagadoHastaAhora+ cantidad
+		 
 	}
+
+	method verificarSiEstaPago(){
+		if(self.dineroPagadoHastaAhora()==self.precioDelPaquete()){
+			 self.error("ya terminaste de pagar")
+		 }
+	}
+
 
 	method puedeSerEntregado(){
 		return self.estaPagado() && destinos.all({d => d.personaCumpleRestricciones(persona)})
@@ -53,63 +71,8 @@ object paquetonViajero{
 	
 }
 
-object matrix{
-	method tarifa(){
-		return 500
-	}
-	method personaCumpleRestricciones(persona_){
-		return persona_.peso()<=1000
-	}
-}
 
-object puenteDeBrooklyn{
-	method tarifa(){
-		return 150
-	}
-	method personaCumpleRestricciones(persona_){
-		return persona_.puedeLlamar()
-	}
-}
 
-object jeanGray{
-	var property puedeLlamar=true
-	var property peso=65
-
-}
-
-object neo{
-	var property puedeLlamar=false
-	var property peso=0
-
-}
-
-object saraConnor{
-	var property puedeLlamar=false
-	var property peso=0
-	var property vehiculo= moto 
-	method pesoTotal(){
-		return peso+vehiculo.peso()
-	}
-
-}
-
-object moto{
-	method peso(){
-		return 100
-	}
-
-}
-
-object camion{
-	var property cantidadDeAcoplados=0
-	method peso(){
-		return 500 +self.pesoAcoplados()
-	}
-	method pesoAcoplados(){
-		return cantidadDeAcoplados*500
-	}
-
-}
 
 /*
 if(x){

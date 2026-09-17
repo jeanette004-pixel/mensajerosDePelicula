@@ -1,5 +1,9 @@
 import paquetes.*
+import transporte.*
+import personajes.*
 import empresa.*
+import lugares.*
+
 
 describe "test de empresas"{
     test "contratar a un mensajero"{
@@ -57,5 +61,22 @@ describe "test de empresas"{
         empresa.contratar(jeanGray)
         const ultimoMensajero=empresa.mensajeros().last()
         assert.equals(65, jeanGray.peso())
+    }
+}
+
+describe "test de empresas, segunda parte"{
+    test "paquete puede ser entregado por algun mensajero"{
+        empresa.contratar(saraConnor)
+        empresa.contratar(neo)
+        paquete.destino(matrix)
+        paquete.pagar() //no es necesario ya que solo testeo el empleado
+        assert.that(empresa.paquetePuedeSerEntregadoPorAlgunMensajero(paquete))
+    }
+
+    test "empleados que pueden llevar un paquete"{
+        empresa.contratar(saraConnor)
+        empresa.contratar(jeanGray)
+        paquete.destino(puenteDeBrooklyn)
+        assert.that(empresa.empleadosQuePuedenLlevarPaquete(paquete)==[saraConnor])
     }
 }

@@ -1,4 +1,7 @@
 import paquetes.*
+import transporte.*
+import personajes.*
+import lugares.*
 describe "Tests de Pepita" {
 
 	test "neo no puede llevar el paquete a la matrix" {
@@ -36,4 +39,10 @@ describe "Tests de Pepita" {
         assert.equals(70, saraConnor.peso())
 		assert.that(paquete.puedeSerEntregado())
 	}
+    test "sara no puede llevar el paquete al puente de brooklyn porque no puede llamar"{
+        paquete.destino(puenteDeBrooklyn)
+        paquete.persona(saraConnor)
+        paquete.pagar()
+        assert.notThat(paquete.puedeSerEntregado())
+    }
 }

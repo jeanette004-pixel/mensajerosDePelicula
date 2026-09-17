@@ -6,8 +6,8 @@ object paquete{
 	var property peso=0
 	var property persona=neo
 	var property destino=matrix
-	method precioDelPaquete(lugar){
-		lugar.tarifa()
+	method precioDelPaquete(destino_){
+		destino_.tarifa()
 	}
 	method pagar(){
 		 estaPagado= true
@@ -29,8 +29,8 @@ object paquetito{
 	var property peso=0
 	var property persona=neo
 	var property destino=matrix
-	method precioDelPaquete(lugar){
-		return lugar.tarifa()
+	method precioDelPaquete(destino_){
+		return destino_.tarifa()
 	}
 /*
 	method pagar(){
@@ -48,8 +48,8 @@ object paquetonViajero{
 	var property peso=0
 	var property persona=neo
 	var property destinos=[]//multiples destinos
-	method precioDelPaquete(){//no uso lugar 
-	//	lugar.tarifa()
+	method precioDelPaquete(){//no uso destino_
+	//	destino_.tarifa()
 		return 100 * destinos.size()
 	}
 	method pagar(cantidad){

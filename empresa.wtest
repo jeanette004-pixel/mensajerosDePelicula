@@ -77,6 +77,19 @@ describe "test de empresas, segunda parte"{
         empresa.contratar(saraConnor)
         empresa.contratar(jeanGray)
         paquete.destino(puenteDeBrooklyn)
-        assert.that(empresa.empleadosQuePuedenLlevarPaquete(paquete)==[saraConnor])
+        assert.that(empresa.empleadosQuePuedenLlevarPaquete(paquete)==[jeanGray])
     }
+
+    test "mensajeria tiene sobrepeso"{
+        empresa.contratar(saraConnor)
+        empresa.contratar(jeanGray)
+        saraConnor.vehiculo(camion)
+        assert.that(empresa.tieneSobrepeso())
+    }
+    test "añadir precio de paquete a recaudacion"{
+        empresa.contratar(neo)
+        paquete.destino(matrix)
+        empresa.enviarPaquete(paquete)
+        assert.equals(empresa.recaudacionDePaquetes()==0)
+    } 
 }

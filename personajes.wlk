@@ -14,10 +14,28 @@ object neo{
 
 object saraConnor{
 	var property puedeLlamar=false
-	var property peso=0
-	var property vehiculo= moto 
-	method pesoTotal(){
-		return peso+vehiculo.peso()
+	var pesoPropio = 0
+	var property vehiculo=moto
+	
+	method pesoPropio(peso_){
+		pesoPropio = peso_
+	}
+
+	method peso(){
+		return pesoPropio + vehiculo.peso()
 	}
 
 }
+
+
+
+
+
+
+/*
+sara antes 
+var property peso=0
+	var property vehiculo= moto 
+	method pesoTotal(){
+		return peso+vehiculo.peso()
+	}*/

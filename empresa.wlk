@@ -8,6 +8,10 @@ object empresa{
     var paquetesPendientes=[]
     var recaudacionDePaquetes=0
 
+    method recaudacionDePaquetes(){
+        return recaudacionDePaquetes
+    }
+
     method mensajeros(){
         return mensajeros
     }
@@ -50,8 +54,9 @@ object empresa{
     
     method enviarPaquete(paquete_){ //4
         const mensajero=self.mensajeros().anyOne()
+        paquete.persona(mensajero)
         if(paquete_.destino().personaCumpleRestricciones(mensajero)){
-           self.añadirRecaudacionDePaquete(paquete_.precioDelPaquete(paquete_.lugar()))
+           self.añadirRecaudacionDePaquete(paquete_.precioDelPaquete(paquete_.destino()))
         }else{
             paquetesPendientes.add(paquete_)
         }

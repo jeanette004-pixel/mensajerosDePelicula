@@ -90,6 +90,6 @@ describe "test de empresas, segunda parte"{
         empresa.contratar(neo)
         paquete.destino(matrix)
         empresa.enviarPaquete(paquete)
-        assert.equals(empresa.recaudacionDePaquetes()==0)
+        assert.equals(empresa.recaudacionDePaquetes(),0)
     } 
 }

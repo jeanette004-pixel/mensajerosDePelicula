@@ -43,6 +43,7 @@ object empresa{
     method paquetePuedeSerEntregadoPorAlgunMensajero(paquete_){ //1
         return mensajeros.any({m=>paquete_.destino().personaCumpleRestricciones(m)})
     } //solo se fija en las condiciones del empleado para el paquete, no en si esta pagado
+    //preguntarle directo al paquete(el paquete luego al destino pero adentro de paquete)
 
     method empleadosQuePuedenLlevarPaquete(paquete_){ //2
         return mensajeros.filter({m=> paquete_.destino().personaCumpleRestricciones(m)})
@@ -54,11 +55,11 @@ object empresa{
     
     method enviarPaquete(paquete_){ //4
         const mensajero=self.mensajeros().anyOne()
-        paquete.persona(mensajero)
+        paquete_.persona(mensajero)
         if(paquete_.destino().personaCumpleRestricciones(mensajero)){
            self.añadirRecaudacionDePaquete(paquete_.precioDelPaquete(paquete_.destino()))
         }else{
-            paquetesPendientes.add(paquete_)
+            paquetesPendientes.add(paquete_) //encargarme de pagar en el test
         }
     }
 

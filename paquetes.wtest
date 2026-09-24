@@ -6,44 +6,44 @@ describe "Tests de Pepita" {
 
 	test "neo no puede llevar el paquete a la matrix" {
         paquete.destino(matrix)
-		paquete.persona(neo)
+		//paquete.persona(neo)
 		assert.notThat(paquete.estaPagado())
-		assert.notThat(paquete.puedeSerEntregado())
+		assert.notThat(paquete.puedeSerEntregado(neo))
 	}
     test "jeanGray puede llevar el paquete a la matrix" {
         paquete.destino(matrix)
-		paquete.persona(jeanGray)
+	//	paquete.persona(jeanGray)
         paquete.pagar()
 		assert.that(paquete.estaPagado())
-		assert.that(paquete.puedeSerEntregado())
+		assert.that(paquete.puedeSerEntregado(jeanGray))
 	}
     test "sara no puede llevar el paquete a brooklyn" {
         paquete.destino(puenteDeBrooklyn)
-		paquete.persona(saraConnor)
+		//paquete.persona(saraConnor)
         saraConnor.vehiculo(camion)
         saraConnor.pesoPropio(70)
         paquete.pagar()
         camion.cantidadDeAcoplados(1)
         assert.that(paquete.estaPagado())
        // assert.equals(70, saraConnor.pesoPropio())
-		assert.notThat(paquete.puedeSerEntregado())
+		assert.notThat(paquete.puedeSerEntregado(saraConnor))
 	}
     test "sara puede llevar el paquete a brooklyn" {
         paquete.destino(puenteDeBrooklyn)
-		paquete.persona(saraConnor)
+		//paquete.persona(saraConnor)
         saraConnor.puedeLlamar(true)
         saraConnor.pesoPropio(70)
         saraConnor.vehiculo(moto)
         paquete.pagar()
         assert.that(paquete.estaPagado())
       //  assert.equals(70, saraConnor.peso())
-		assert.that(paquete.puedeSerEntregado())
+		assert.that(paquete.puedeSerEntregado(saraConnor))
 	}
     test "sara no puede llevar el paquete al puente de brooklyn porque no puede llamar"{
         paquete.destino(puenteDeBrooklyn)
-        paquete.persona(saraConnor)
+     //   paquete.persona(saraConnor)
         paquete.pagar()
-        assert.notThat(paquete.puedeSerEntregado())
+        assert.notThat(paquete.puedeSerEntregado(saraConnor))
     }
     test "sumo peso de transporte a sara connor"{
         saraConnor.pesoPropio(70)

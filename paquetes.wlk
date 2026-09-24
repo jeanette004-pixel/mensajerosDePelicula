@@ -4,7 +4,7 @@ import transporte.*
 object paquete{
 	var property estaPagado=false
 	var property peso=0
-	var property persona=neo
+	var property persona=neo //borrar
 	var property destino=matrix
 	method precioDelPaquete(destino_){
 		destino_.tarifa()
@@ -13,8 +13,12 @@ object paquete{
 		 estaPagado= true
 	}
 
-	method puedeSerEntregado(){
-		return self.estaPagado() && destino.personaCumpleRestricciones(persona)
+	method puedeSerEntregado(persona_) {// añadir por parametro persona_, no asignarle la variable
+		return self.estaPagado() && self.laPersonaCumpleRestriccionesDelDestino(persona)
+	}
+
+	method laPersonaCumpleRestriccionesDelDestino(persona_){
+		return destino.personaCumpleRestricciones(persona_)
 	}
 	/*
 	ooo ????

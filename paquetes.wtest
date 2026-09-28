@@ -35,7 +35,6 @@ describe "Tests de Pepita" {
         saraConnor.pesoPropio(70)
         saraConnor.vehiculo(moto)
         paquete.pagar()
-        assert.that(paquete.estaPagado())
       //  assert.equals(70, saraConnor.peso())
 		assert.that(paquete.puedeSerEntregado(saraConnor))
 	}

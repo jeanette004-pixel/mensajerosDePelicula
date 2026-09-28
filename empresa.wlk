@@ -11,6 +11,9 @@ object empresa{
     method recaudacionDePaquetes(){
         return recaudacionDePaquetes
     }
+    method paquetesPendientes(){
+        return paquetesPendientes
+    }
 
     method mensajeros(){
         return mensajeros
@@ -55,12 +58,11 @@ object empresa{
     
     method enviarPaquete(paquete_){ //4
         const mensajero=self.mensajeros().anyOne()
-     //   paquete_.persona(mensajero) //encargarme de pagar en el test
         if(paquete_.puedeSerEntregado(mensajero)){
-           self.añadirRecaudacionDePaquete(paquete_.precioDelPaquete(paquete_.destino()))
+           self.añadirRecaudacionDePaquete(paquete_.precio())
         }else{
             paquetesPendientes.add(paquete_) 
-        }
+        }//encargarme de pagar en el test
     }
 
     method añadirRecaudacionDePaquete(precio_){
@@ -74,7 +76,7 @@ object empresa{
     }
 
     method enviarPaqueteMasCaro(){ //7
-        const paquetePendienteMasCaro=paquetesPendientes.max({p=>p.precioDelPaquete(p.lugar())})
+        const paquetePendienteMasCaro=paquetesPendientes.max({p=>p.precio()})
         self.enviarPaquete(paquetePendienteMasCaro)
         paquetesPendientes.remove(paquetePendienteMasCaro)
     }

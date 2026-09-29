@@ -1,0 +1,132 @@
+import paquetes.*
+import transporte.*
+import personajes.*
+import empresa.*
+import lugares.*
+
+
+describe "test de empresas"{
+    test "contratar a un mensajero"{
+        empresa.contratar(saraConnor)
+        assert.that(empresa.mensajeros().contains(saraConnor))
+    }
+
+    test "despedir a un mensajero"{
+        empresa.contratar(saraConnor)
+        empresa.despedir(saraConnor)
+        assert.notThat(empresa.mensajeros().contains(saraConnor))
+    }
+
+    test "despedir a todos los mensajeros"{
+        empresa.contratar(saraConnor)
+        empresa.contratar(jeanGray)
+        empresa.mensajeros().clear()
+        assert.that(empresa.mensajeros().isEmpty())
+    }
+
+    test "la mensajeria es grande"{
+        empresa.contratar(saraConnor)
+        empresa.contratar(jeanGray)
+        empresa.contratar(neo)
+        assert.that(empresa.mensajeriaEsGrande())
+    }
+    test "la mensajeria no es grande"{
+        empresa.contratar(saraConnor)
+        empresa.contratar(jeanGray)
+        assert.notThat(empresa.mensajeriaEsGrande())
+    }
+
+    test "paquete puede ser entegado por el primer mensajero"{
+        empresa.contratar(neo)
+        empresa.contratar(jeanGray)
+        const primerMensajero=empresa.mensajeros().first()
+        paquete.destino(matrix)
+        paquete.pagar()
+        assert.that(paquete.puedeSerEntregado(primerMensajero))
+    }
+
+    test "paquete no puede ser entegado por el primer mensajero"{
+        empresa.contratar(neo)
+        empresa.contratar(jeanGray)
+        const primerMensajero=empresa.mensajeros().first()
+        paquete.destino(matrix)
+        //no paga
+        assert.notThat(paquete.puedeSerEntregado(primerMensajero))
+    }
+
+    test "peso del ultimo pasajero"{
+        empresa.contratar(saraConnor)
+        empresa.contratar(jeanGray)
+        const ultimoMensajero=empresa.mensajeros().last()
+        assert.equals(65, jeanGray.peso())
+    }
+}
+
+describe "test de empresas, segunda parte"{
+    test "paquete puede ser entregado por algun mensajero"{
+        empresa.contratar(saraConnor)
+        empresa.contratar(neo)
+        paquete.destino(matrix)
+        paquete.pagar() //no es necesario ya que solo testeo el empleado
+        assert.that(empresa.paquetePuedeSerEntregadoPorAlgunMensajero(paquete))
+    }
+
+    test "empleados que pueden llevar un paquete"{
+        empresa.contratar(saraConnor)
+        empresa.contratar(jeanGray)
+        paquete.destino(puenteDeBrooklyn)
+        paquete.pagar()
+        assert.equals(empresa.empleadosQuePuedenLlevarPaquete(paquete),[jeanGray])
+    }
+    
+    test "enviar un paquete"{
+        empresa.contratar(neo)
+        paquete.destino(matrix)
+        paquete.pagar()
+        empresa.enviarPaquete(paquete)
+        assert.equals(500,empresa.recaudacionDePaquetes())
+    }
+
+    test "paquete no se puede enviar y queda en pendientes"{
+        empresa.contratar(neo)
+        paquete.destino(matrix)
+       // paquete.pagar()
+        empresa.enviarPaquete(paquete)
+        assert.that(empresa.paquetesPendientes()==[paquete])
+    }
+
+    test "añadir recaudacion de paquete"{
+        paquete.destino(matrix)
+        empresa.añadirRecaudacionDePaquete(paquete.precio())
+        assert.equals(500,empresa.recaudacionDePaquetes())
+    }
+
+    test "enviar todos los paquetes"{
+        empresa.contratar(neo)
+        paquete.destino(matrix)
+        paquetonViajero.destinos().add(matrix)
+        paquete.pagar()
+        paquetonViajero.pagar(100)
+        const distintosPaquetes =[paquete,paquetonViajero]
+        distintosPaquetes.forEach({tipoDePaquete=>empresa.enviarPaquete(tipoDePaquete)})
+        assert.equals(600,empresa.recaudacionDePaquetes())
+    }
+
+    test "pagar paqueton viajero"{
+        paquetonViajero.destinos().add(matrix)
+        paquetonViajero.pagar(100)
+        assert.that(paquetonViajero.estaPagado())
+    }
+
+    test "enviar paquete mas caro"{
+        empresa.contratar(neo)
+        paquete.destino(matrix)
+        paquetonViajero.destinos().add(matrix)
+        paquete.pagar()
+        paquetonViajero.pagar(100)
+        empresa.paquetesPendientes().add(paquetonViajero)
+        empresa.paquetesPendientes().add(paquete)
+        empresa.enviarPaqueteMasCaro()
+        assert.equals(500,empresa.recaudacionDePaquetes())
+    }
+}
